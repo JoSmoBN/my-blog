@@ -11,6 +11,7 @@ class PostsNew extends Component {
                     type="text"
                     { ...field.input }
                 />
+                { field.meta.error }
             </div>
         )
     }
@@ -33,13 +34,29 @@ class PostsNew extends Component {
                     name="content"
                     component={ this.renderField }
                 />
+                <button type="submit" className="btn btn-primary">Submit</button>
             </form>
         )
     }
 }
 
 function validate( values ) {
+    const errors = {};
 
+    // Validate the inputs from 'values'
+    if ( !values.title ) {
+        errors.title = "Please enter a title for your post."
+    } 
+    if ( !values.categories ) {
+        errors.categories = "Your post is going to need some categories."
+    }
+    if ( !values.content ) {
+        errors.content = "Not much of a post without some content, right?"
+    }
+
+    // If errors is empty, the form is fine to submit
+    // Will fail validation if errors has any properties
+    return errors
 }
 
 export default reduxForm({
